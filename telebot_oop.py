@@ -55,3 +55,4 @@ def message_extraction(input_data):
 
 rebzya = debugging_run()
 
+aaa = message_extraction(rebzya)
