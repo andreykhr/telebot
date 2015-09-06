@@ -62,7 +62,7 @@ def message_extraction(message_body):
 
         name = update['message']['chat']['username']
 
-        if from_id <> ADMIN_ID:
+        if from_id <> admin_id:
             send_text("You're not autorized to use me!", from_id)
             log_event('Unautorized: %s' % update)
             continue
@@ -80,10 +80,7 @@ def message_extraction(message_body):
 # global offset = 0# пока пусть будет глобальным, а то хз
 
 def log_event(text):
-    """
-    Процедура логгирования
-    ToDo: 1) Запись лога в файл
-    """
+
     event = '%s >> %s' % (time.ctime(), text)
     print event
 
