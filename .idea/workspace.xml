@@ -345,7 +345,11 @@
       <created>1441564201500</created>
       <updated>1441564201500</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Поправил, проверяем содержимое, пока для отладки выводим данные, не забыть их выпилить нахуй.">
+      <created>1441564247202</created>
+      <updated>1441564247202</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
