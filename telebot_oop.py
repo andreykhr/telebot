@@ -48,11 +48,14 @@ def debugging_run():
     data_new = debug_info.request_executor()
     return data_new   # Вызвали метод request_executor из класса api_req, получили result и вернули его
 
+def message_extraction(message_body):
 
-def message_extraction(input_data):
+    for update in message_body:
 
-    print input_data
+        message = update['message']['text']
+
+        print message
 
 rebzya = debugging_run()
-
-aaa = message_extraction(rebzya)
+otvet = message_extraction(rebzya)
+# print rebzya
