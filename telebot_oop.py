@@ -9,6 +9,28 @@ api_url = 'https://api.telegram.org/bot'
 secret = '96873572:AAGB7UU19Lo9OTQBd6K6lBeXwZSfzy-LXZE'
 offset = 0
 
+class api_post:   # Отправка сообщения
+
+    def __init__(self, api_url, secret, chat_id, text):
+
+        self.api_url=api_url
+        self.secret=secret
+        self.chat_id=chat_id
+        self.text=text
+
+    def message_generator(self):
+
+        self.options = {'chat_id': chat_id, 'text': text}
+        return self.options
+
+    def message_post(self):
+
+        log_event('Sending to %s: %s' % (chat_id, text))
+        self.request = requests.post(self.api_url + self.secret + '/sendMessage', data=message_generator())
+        if not self.request.status_code == 200:
+            return False
+        return self.request.json()['ok']
+
 class api_req:
 
     def __init__(self,interval,admin_id,api_url,secret,offset):
