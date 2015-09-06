@@ -52,9 +52,26 @@ def message_extraction(message_body):
 
     for update in message_body:
 
+        offset = update['update_id']
+
+        if not 'message' in update or not 'text' in update['message']:
+            log_event('Unknown update: %s' % update) # сохраняем в лог пришедшее обновление
+            continue
+
+        from_id = update['message']['chat']['id']
+
         message = update['message']['text']
 
+        name = update['message']['chat']['username']
+
+        print offset
+
         print message
+
+        print from_id
+
+# global offset = 0# пока пусть будет глобальным, а то хз
+
 
 rebzya = debugging_run()
 otvet = message_extraction(rebzya)
