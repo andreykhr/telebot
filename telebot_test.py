@@ -36,9 +36,6 @@ def check_updates():
         print "Message", message
 
 
-sub
-
-
 if __name__ == "__main__":
     while True:
         try:
