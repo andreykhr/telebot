@@ -60,8 +60,6 @@ def message_extraction(message_body):
 
         from_id = update['message']['chat']['id']
 
-#        chat_id = from_id # пиздец костыль
-
         name = update['message']['chat']['username']
 
         if from_id <> admin_id:
