@@ -19,12 +19,12 @@ class api_req:
 
     def request_executor(self):
 
-        self.options={'offset': self.offset + 1, 'limit': 5, 'timeout': 0} # Генерация строки параметров
+        self.options={'offset': self.offset + 1, 'limit': 5, 'timeout': 0}
 
         try:
 
 
-            self.request = requests.get(self.api_url + self.secret + '/getUpdates', data=self.options) # Запрос
+            self.request = requests.get(self.api_url + self.secret + '/getUpdates', data=self.options)
 
         except:
 
