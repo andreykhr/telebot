@@ -108,7 +108,7 @@ def message_extraction(message_body):
 
         ret={'offset': offset, 'message': message, 'from_id': from_id, 'name': name}
 
-        return ret
+     #   return ret
 
 
 def log_event(text):
