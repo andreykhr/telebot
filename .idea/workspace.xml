@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f2889246-02b3-4afc-8d04-ed6159f0d87d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/telebot.py" afterPath="$PROJECT_DIR$/telebot.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="telebot.iws" />
@@ -42,7 +41,7 @@
         <entry file="file://$PROJECT_DIR$/telebot.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-0.507732" vertical-offset="1367" max-vertical-offset="1755">
-              <caret line="78" column="4" selection-start-line="78" selection-start-column="4" selection-end-line="78" selection-end-column="4" />
+              <caret line="78" column="0" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
               <folding>
                 <element signature="e#47#62#0" expanded="true" />
               </folding>
@@ -420,7 +419,11 @@
       <created>1441647700767</created>
       <updated>1441647700767</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Еще пара правок.">
+      <created>1441648011576</created>
+      <updated>1441648011576</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -511,7 +514,8 @@
     <MESSAGE value="Рефакторинг" />
     <MESSAGE value="Полностью рабочий бот с одно единственной функцией - отвечать Hello на Hello" />
     <MESSAGE value="Поправил немного в логе, теперь правильно отображает номер чята" />
-    <option name="LAST_COMMIT_MESSAGE" value="Поправил немного в логе, теперь правильно отображает номер чята" />
+    <MESSAGE value="Еще пара правок." />
+    <option name="LAST_COMMIT_MESSAGE" value="Еще пара правок." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -554,7 +558,7 @@
     <entry file="file://$PROJECT_DIR$/telebot.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.507732" vertical-offset="1367" max-vertical-offset="1755">
-          <caret line="78" column="4" selection-start-line="78" selection-start-column="4" selection-end-line="78" selection-end-column="4" />
+          <caret line="78" column="0" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
           <folding>
             <element signature="e#47#62#0" expanded="true" />
           </folding>
