@@ -17,8 +17,6 @@ class api_req:
         self.text=text
         self.chat_id=chat_id
 
-#===================
-
     def request_executor(self):
 
         self.options={'offset': self.offset + 1, 'limit': 5, 'timeout': 0} # Генерация строки параметров
@@ -35,11 +33,8 @@ class api_req:
 
         if not self.request.status_code == 200: return False
         if not self.request.json()['ok']: return False
-                                    # Произвели проверки ответа
 
-        return self.request.json()['result'] # Возращаем json с содержимым и оффсет
-
- #===================
+        return self.request.json()['result']
 
     def post_executor(self):
 
@@ -60,12 +55,12 @@ def message_extraction(message_body):
         offset = update['update_id']
 
         if not 'message' in update or not 'text' in update['message']:
-            log_event('Unknown update: %s' % update) # сохраняем в лог пришедшее обновление
+            log_event('Unknown update: %s' % update)
             continue
 
         from_id = update['message']['chat']['id']
 
-        chat_id = from_id # пиздец костыль
+#        chat_id = from_id # пиздец костыль
 
         name = update['message']['chat']['username']
 
@@ -76,28 +71,12 @@ def message_extraction(message_body):
 
         message = update['message']['text']
 
-#        print offset
-
-#        print message     # пока отладка - пусть будет.
-
-        #print from_id
-
-        #print name
-
-        #return ret
-
         options=(offset, name, from_id, message)
-
-#        print 'Options', options
 
         command_executor(*options)
 
-#======================== Поправить потом
 def log_event(text):
-    """
-    Процедура логгирования
-    ToDo: 1) Запись лога в файл
-    """
+
     event = '%s >> %s' % (time.ctime(), text)
     print event
 
@@ -108,8 +87,6 @@ def command_executor(offset, name, from_id, cmd):
         runn = api_req(interval,admin_id,api_url,secret,offset,text,from_id)
         data_runn=runn.post_executor()
 
-#=========================
-# Сначала парсим конфиг
 
 config = ConfigParser.RawConfigParser()
 config.read('/Users/one/Documents/Code/test/telebot.cfg')
@@ -122,7 +99,6 @@ offset = config.getint('SectionBot', 'offset')
 text='Hello'
 chat_id=0
 
-#  Главный цикл, крутим вызовы
 if __name__ == "__main__":
     while True:
         print offset
