@@ -43,7 +43,7 @@ class api_req:
 
     def post_executor(self):
 
-        log_event('Sending to %s: %s' % (chat_id, text))
+        log_event('Sending to %s: %s' % (self.chat_id, self.text))
         self.options={'chat_id': self.chat_id, 'text': self.text}
         self.request=requests.post(self.api_url + self.secret + '/sendMessage',self.options)
         if not self.request.status_code == 200:

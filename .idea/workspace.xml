@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f2889246-02b3-4afc-8d04-ed6159f0d87d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/telebot.py" afterPath="$PROJECT_DIR$/telebot.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/telebot_oop.py" afterPath="$PROJECT_DIR$/telebot_oop.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="telebot.iws" />
@@ -42,8 +41,8 @@
       <file leaf-file-name="telebot.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/telebot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.23913044" vertical-offset="726" max-vertical-offset="2115">
-              <caret line="55" column="17" selection-start-line="55" selection-start-column="17" selection-end-line="55" selection-end-column="17" />
+            <state vertical-scroll-proportion="-2.4407218" vertical-offset="1727" max-vertical-offset="2115">
+              <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
               <folding>
                 <element signature="e#47#62#0" expanded="true" />
               </folding>
@@ -413,7 +412,11 @@
       <created>1441636792620</created>
       <updated>1441636792620</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Полностью рабочий бот с одно единственной функцией - отвечать Hello на Hello">
+      <created>1441647553564</created>
+      <updated>1441647553564</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -502,7 +505,8 @@
     <MESSAGE value="Пофикшены фичи, добавлены баги." />
     <MESSAGE value="Класс пост, учимся отправлять сообщения в чятъ" />
     <MESSAGE value="Рефакторинг" />
-    <option name="LAST_COMMIT_MESSAGE" value="Рефакторинг" />
+    <MESSAGE value="Полностью рабочий бот с одно единственной функцией - отвечать Hello на Hello" />
+    <option name="LAST_COMMIT_MESSAGE" value="Полностью рабочий бот с одно единственной функцией - отвечать Hello на Hello" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -544,8 +548,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/telebot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23913044" vertical-offset="726" max-vertical-offset="2115">
-          <caret line="55" column="17" selection-start-line="55" selection-start-column="17" selection-end-line="55" selection-end-column="17" />
+        <state vertical-scroll-proportion="-2.4407218" vertical-offset="1727" max-vertical-offset="2115">
+          <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
           <folding>
             <element signature="e#47#62#0" expanded="true" />
           </folding>
