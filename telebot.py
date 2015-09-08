@@ -23,7 +23,6 @@ class api_req:
 
         try:
 
-
             self.request = requests.get(self.api_url + self.secret + '/getUpdates', data=self.options)
 
         except:
@@ -44,7 +43,6 @@ class api_req:
         if not self.request.status_code == 200:
             return False
         return self.request.json()['ok']
-
 
 def message_extraction(message_body):
 
@@ -84,7 +82,6 @@ def command_executor(offset, name, from_id, cmd):
 
         runn = api_req(interval,admin_id,api_url,secret,offset,text,from_id)
         data_runn=runn.post_executor()
-
 
 config = ConfigParser.RawConfigParser()
 config.read('/Users/one/Documents/Code/test/telebot.cfg')
