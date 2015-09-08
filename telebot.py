@@ -4,6 +4,14 @@
 import requests
 import ConfigParser
 import time
+import messager
+import sys
+reload(sys)
+
+
+sys.setdefaultencoding('utf8')
+#import sys
+#import traceback
 
 class api_req:
 
@@ -78,25 +86,42 @@ def log_event(text):
 
 def command_executor(offset, name, from_id, cmd):
 
-    if  cmd ==  'Hello':
+    answ = messager.messager_test(cmd)
 
-        runn = api_req(interval,admin_id,api_url,secret,offset,text,from_id)
+    if answ:
+#    if  cmd ==  'Hello':
+
+        runn = api_req(interval,admin_id,api_url,secret,offset,answ,from_id)
         data_runn=runn.post_executor()
 
 config = ConfigParser.RawConfigParser()
-config.read('/Users/one/Documents/Code/test/telebot.cfg')
 
-interval = config.getfloat('SectionBot', 'interval')
-admin_id = config.getint('SectionBot', 'admin_id')
-api_url = config.get('SectionBot', 'api_url')
-secret = config.get('SectionBot', 'secret')
-offset = config.getint('SectionBot', 'offset')
-text='Hello'
-chat_id=0
+try:
+
+    config.read('/Users/one/Documents/Code/test/telebot.cfg')
+
+except:
+
+    print("No config file!")
+    exit(0)
+
+try:
+    interval = config.getfloat('SectionBot', 'interval')
+    admin_id = config.getint('SectionBot', 'admin_id')
+    api_url = config.get('SectionBot', 'api_url')
+    secret = config.get('SectionBot', 'secret')
+    offset = config.getint('SectionBot', 'offset')
+    text='Hello'
+    chat_id=0
+
+except:
+
+    print("Can't parse config file!")
+    exit(0)
 
 if __name__ == "__main__":
     while True:
-        print offset
+
         try:
             test = api_req(interval,admin_id,api_url,secret,offset,text,chat_id)
             data_test = test.request_executor()
