@@ -98,7 +98,7 @@ config = ConfigParser.RawConfigParser()
 
 try:
 
-    config.read('/Users/one/Documents/Code/test/telebot.cfg')
+    config.read('telebot.cfg')
 
 except:
 
