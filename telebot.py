@@ -89,7 +89,6 @@ def command_executor(offset, name, from_id, cmd):
     answ = messager.messager_test(cmd)
 
     if answ:
-#    if  cmd ==  'Hello':
 
         runn = api_req(interval,admin_id,api_url,secret,offset,answ,from_id)
         data_runn=runn.post_executor()
