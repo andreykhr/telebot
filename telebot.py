@@ -147,7 +147,7 @@ def messager_test(message_word):
 
         testword = list_spl[0].strip()
 
-        if message_word == testword:
+        if message_word.lower() == testword.lower():
             rnd = random.randint(1,len(list_spl)-1)
             return list_spl[rnd]
 
