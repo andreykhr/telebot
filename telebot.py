@@ -75,19 +75,13 @@ def message_extraction(message_body):
             continue
 
         message = update['message']['text']
+        log_event('Message from %s: %s' % (name, message))
+        answ = messager_test(message)
 
-        options=(offset, name, from_id, message)
+        if answ:
 
-        command_executor(*options)
-
-def command_executor(offset, name, from_id, cmd):
-
-    answ = messager_test(cmd)
-
-    if answ:
-
-        runn = api_req(interval,admin_id,api_url,secret,offset,answ,from_id)
-        data_runn=runn.post_executor()
+            runn = api_req(interval,admin_id,api_url,secret,offset,answ,from_id)
+            data_runn = runn.post_executor()
 
 config = ConfigParser.RawConfigParser()
 
@@ -136,8 +130,6 @@ def log_event(text):
         filework.close()
 
 def messager_test(message_word):
-
-    log_event(message_word)
 
     words_file = open('words.dat', 'r')
 
