@@ -39,6 +39,10 @@ class api_req:
         if not self.request.status_code == 200: return False
         if not self.request.json()['ok']: return False
 
+        aaa = self.request.json()['result']
+
+        print aaa
+
         return self.request.json()['result']
 
     def post_executor(self):
@@ -64,15 +68,19 @@ def message_extraction(message_body):
             continue
 
         from_id = update['message']['chat']['id']
+        chat_number = update['message']['from']['id']
+        name = update['message']['from']['username']
+#        chat_title = update['message']['chat']['title']
 
-        name = update['message']['chat']['username']
+        print "Chat number ",chat_number
+#        print "Chat title ", chat_title
 
-        if from_id <> admin_id:
+    #    if from_id <> admin_id:
 
-            runn = api_req(interval,admin_id,api_url,secret,offset,'You\'re not autorized to use me!',from_id)
-            data_runn = runn.post_executor()
-            log_event('Unautorized: %s' % update)
-            continue
+     #       runn = api_req(interval,admin_id,api_url,secret,offset,'You\'re not autorized to use me!',from_id)
+      #      data_runn = runn.post_executor()
+       #     log_event('Unautorized: %s' % update)
+        #    continue
 
         message = update['message']['text']
         log_event('Message from %s: %s' % (name, message))
