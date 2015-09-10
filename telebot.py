@@ -4,14 +4,12 @@
 import requests
 import ConfigParser
 import time
-import messager
 import sys
+import os
+import random
 reload(sys)
 
-
 sys.setdefaultencoding('utf8')
-#import sys
-#import traceback
 
 class api_req:
 
@@ -49,6 +47,7 @@ class api_req:
         self.options={'chat_id': self.chat_id, 'text': self.text}
         self.request=requests.post(self.api_url + self.secret + '/sendMessage',self.options)
         if not self.request.status_code == 200:
+
             return False
         return self.request.json()['ok']
 
@@ -69,7 +68,9 @@ def message_extraction(message_body):
         name = update['message']['chat']['username']
 
         if from_id <> admin_id:
-            send_text("You're not autorized to use me!", from_id)
+
+            runn = api_req(interval,admin_id,api_url,secret,offset,'You\'re not autorized to use me!',from_id)
+            data_runn = runn.post_executor()
             log_event('Unautorized: %s' % update)
             continue
 
@@ -79,14 +80,9 @@ def message_extraction(message_body):
 
         command_executor(*options)
 
-def log_event(text):
-
-    event = '%s >> %s' % (time.ctime(), text)
-    print event
-
 def command_executor(offset, name, from_id, cmd):
 
-    answ = messager.messager_test(cmd)
+    answ = messager_test(cmd)
 
     if answ:
 
@@ -105,6 +101,7 @@ except:
     exit(0)
 
 try:
+    
     interval = config.getfloat('SectionBot', 'interval')
     admin_id = config.getint('SectionBot', 'admin_id')
     api_url = config.get('SectionBot', 'api_url')
@@ -117,6 +114,42 @@ except:
 
     print("Can't parse config file!")
     exit(0)
+
+def log_event(text):
+
+    filename = 'chat_log.txt'
+
+    event = '%s >> %s' % (time.ctime(), text)
+
+    if os.path.exists(filename):
+
+        filework = open(filename, 'a')
+        filework.write(event)
+        filework.write("\n")
+        filework.close()
+
+    else:
+
+        filework = open(filename, 'w')
+        filework.write(event)
+        filework.write("\n")
+        filework.close()
+
+def messager_test(message_word):
+
+    log_event(message_word)
+
+    words_file = open('words.dat', 'r')
+
+    for strings in words_file:
+
+        list_spl = strings.split("||")
+
+        testword = list_spl[0].strip()
+
+        if message_word == testword:
+            rnd = random.randint(1,len(list_spl)-1)
+            return list_spl[rnd]
 
 if __name__ == "__main__":
     while True:
