@@ -78,14 +78,7 @@ def message_extraction(message_body):
 
 config = ConfigParser.RawConfigParser()
 
-try:
-
-    config.read('telebot.cfg')
-
-except:
-
-    print("No config file!")
-    exit(0)
+config.read('telebot.cfg')
 
 try:
     
@@ -130,26 +123,20 @@ def messager_test(message_word):
 
     # Извлекаем слово, убираем пунктуацию, переводим в нижний регистр и загоняем в список по пробелам
 
-    message_word_truncated = []
-
-    message_word_truncated = message_word.translate(string.maketrans("",""), string.punctuation).lower().split(" || ")
+    message_word_truncated = message_word.translate(string.maketrans("",""), string.punctuation).lower().split(" ")
 
     string_with_words = []
 
     for strings in words_file:
 
-        list_original = strings.split(" || ")
-
-        list_spl = strings.lower().split(" || ") # Получаем строку из файла, делим ее по разделителю и переводим в нижний регистр
-
         counter = 0
-
+        list_original = strings.split(" || ")
+        list_spl = strings.lower().split(" || ") # Получаем строку из файла, делим ее по разделителю и переводим в нижний регистр
         list_spl_truncated = list_spl[:]
 
         for elements in list_spl:
 
             list_spl_truncated[counter] = list_spl[counter].translate(string.maketrans("",""), string.punctuation) #  Удаляем пунктуацию, получаем чистый список
-
             counter+=1
 
         list_diff = list(set(list_spl_truncated) & set(message_word_truncated)) #  получаем точки пресечения списков
