@@ -7,9 +7,10 @@ import time
 import sys
 import os
 import random
+import string
 reload(sys)
 
-sys.setdefaultencoding('utf8')
+sys.setdefaultencoding('utf-8')
 
 class api_req:
 
@@ -39,10 +40,6 @@ class api_req:
         if not self.request.status_code == 200: return False
         if not self.request.json()['ok']: return False
 
-        aaa = self.request.json()['result']
-
-        print aaa
-
         return self.request.json()['result']
 
     def post_executor(self):
@@ -70,18 +67,6 @@ def message_extraction(message_body):
         from_id = update['message']['chat']['id']
         chat_number = update['message']['from']['id']
         name = update['message']['from']['username']
-#        chat_title = update['message']['chat']['title']
-
-        print "Chat number ",chat_number
-#        print "Chat title ", chat_title
-
-    #    if from_id <> admin_id:
-
-     #       runn = api_req(interval,admin_id,api_url,secret,offset,'You\'re not autorized to use me!',from_id)
-      #      data_runn = runn.post_executor()
-       #     log_event('Unautorized: %s' % update)
-        #    continue
-
         message = update['message']['text']
         log_event('Message from %s: %s' % (name, message))
         answ = messager_test(message)
@@ -141,15 +126,50 @@ def messager_test(message_word):
 
     words_file = open('words.dat', 'r')
 
+    message_word = message_word.encode('utf-8', 'ignore')
+
+    # Извлекаем слово, убираем пунктуацию, переводим в нижний регистр и загоняем в список по пробелам
+
+    message_word_truncated = []
+
+    message_word_truncated = message_word.translate(string.maketrans("",""), string.punctuation).lower().split(" || ")
+
+    string_with_words = []
+
     for strings in words_file:
 
-        list_spl = strings.split("||")
+        list_original = strings.split(" || ")
 
-        testword = list_spl[0].strip()
+        list_spl = strings.lower().split(" || ") # Получаем строку из файла, делим ее по разделителю и переводим в нижний регистр
 
-        if message_word.lower() == testword.lower():
-            rnd = random.randint(1,len(list_spl)-1)
-            return list_spl[rnd]
+        counter = 0
+
+        list_spl_truncated = list_spl[:]
+
+        for elements in list_spl:
+
+            list_spl_truncated[counter] = list_spl[counter].translate(string.maketrans("",""), string.punctuation) #  Удаляем пунктуацию, получаем чистый список
+
+            counter+=1
+
+        list_diff = list(set(list_spl_truncated) & set(message_word_truncated)) #  получаем точки пресечения списков
+
+        if list_diff:
+
+            string_with_words = string_with_words + list_original
+
+    if string_with_words:
+
+        rnd = random.randint(1,len(string_with_words)-1)
+
+        answ_word = string_with_words[rnd]
+
+        return answ_word
+
+    else:
+
+        return False
+
 
 if __name__ == "__main__":
     while True:
