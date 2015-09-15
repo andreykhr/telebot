@@ -7,7 +7,7 @@ import time
 import sys
 import os
 import random
-import string
+#import string
 reload(sys)
 
 sys.setdefaultencoding('utf-8')
@@ -117,14 +117,22 @@ def log_event(text):
 
 def messager_test(message_word):
 
+    if message_word == '/help':
+
+        return "Telebot - Simple Telegram bot"
+
+    elif message_word == '/stop':
+
+        return "Hui tebe!"
+
+    elif message_word == '/start':
+
+        return "OK"
+
     words_file = open('words.dat', 'r')
-
     message_word = message_word.encode('utf-8', 'ignore')
-
     # Извлекаем слово, убираем пунктуацию, переводим в нижний регистр и загоняем в список по пробелам
-
     message_word_truncated = message_word.translate(string.maketrans("",""), string.punctuation).lower().split(" ")
-
     string_with_words = []
 
     for strings in words_file:
@@ -148,7 +156,6 @@ def messager_test(message_word):
     if string_with_words:
 
         rnd = random.randint(1,len(string_with_words)-1)
-
         answ_word = string_with_words[rnd]
 
         return answ_word
