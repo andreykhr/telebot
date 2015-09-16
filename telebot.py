@@ -101,19 +101,10 @@ def log_event(text):
 
     event = '%s >> %s' % (time.ctime(), text)
 
-    if os.path.exists(filename):
-
-        filework = open(filename, 'a')
-        filework.write(event)
-        filework.write("\n")
-        filework.close()
-
-    else:
-
-        filework = open(filename, 'w')
-        filework.write(event)
-        filework.write("\n")
-        filework.close()
+    filework = open(filename, 'a+')
+    filework.write(event)
+    filework.write("\n")
+    filework.close()
 
 def messager_test(message_word):
 
