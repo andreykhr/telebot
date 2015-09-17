@@ -120,7 +120,15 @@ def messager_test(message_word):
 
         return "OK"
 
-    words_file = open('words.dat', 'r')
+    try:
+
+        words_file = open('words.dat', 'r')
+
+    except:
+
+        print "Can't open words file!"
+        exit(0)
+    
     message_word = message_word.encode('utf-8', 'ignore') # Извлекаем слово, убираем пунктуацию, переводим в нижний регистр и загоняем в список по пробелам
     message_word_truncated = message_word.translate(string.maketrans("",""), string.punctuation).lower().split(" ")
     string_with_words = []
