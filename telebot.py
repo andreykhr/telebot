@@ -1,13 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import requests
-import ConfigParser
-import time
-import sys
-import os
-import random
-import string
+import requests, ConfigParser, time, sys, os, random, string
+
 reload(sys)
 
 sys.setdefaultencoding('utf-8')
@@ -68,8 +63,7 @@ def message_extraction(message_body):
         chat_number = update['message']['from']['id']
         first_name = update['message']['from']['first_name']
         last_name = update['message']['from']['last_name']
-        name = first_name
-#        name = update['message']['from']['username']
+        name = first_name + ' ' + last_name
         message = update['message']['text']
         log_event('Message from %s: %s' % (name, message))
         answ = messager_test(message)
