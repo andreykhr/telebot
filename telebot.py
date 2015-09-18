@@ -61,9 +61,7 @@ def message_extraction(message_body):
 
         from_id = update['message']['chat']['id']
         chat_number = update['message']['from']['id']
-        first_name = update['message']['from']['first_name']
-        last_name = update['message']['from']['last_name']
-        name = first_name + ' ' + last_name
+        name =  update['message']['from']['first_name'] + ' ' + update['message']['from']['last_name']
         message = update['message']['text']
         log_event('Message from %s: %s' % (name, message))
         answ = messager_test(message)
