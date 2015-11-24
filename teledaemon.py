@@ -9,7 +9,7 @@ class MyDaemon(Daemon):
         telebot.start()
 
 if __name__ == "__main__": 
-    my_daemon = MyDaemon('/var/run/telebot.pid')
+    my_daemon = MyDaemon('telebot.pid')
 
     if len(sys.argv) >= 2:
         if 'start' == sys.argv[1]:
