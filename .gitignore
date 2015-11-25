@@ -1,6 +1,4 @@
-chat_log.txt
-daemonize.pyc
+*.txt
+*.pyc
 telebot.cfg
-telebot.pyc
 words.dat
-
