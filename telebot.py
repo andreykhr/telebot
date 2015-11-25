@@ -57,7 +57,7 @@ def message_extraction(message_body):
         offset = update['update_id']
 
         if not 'message' in update or not 'text' in update['message']:
-            log_event('Unknown update: %s' % update)
+            log_event('Unknown update: %s' % (update), "error")
             continue
 
         from_id = update['message']['chat']['id']
@@ -108,7 +108,7 @@ except:
 
 def log_event(text,logname):
 
-    filename = logname+'_chat_log.txt'
+    filename = logname+'_log.txt'
 
     event = '%s >> %s' % (time.ctime(), text)
 
