@@ -132,7 +132,7 @@ def messager_test(message_word):
         exit(0)
 
     message_word = message_word.encode('utf-8', 'ignore') # Извлекаем слово, убираем пунктуацию, переводим в нижний регистр и загоняем в список по пробелам
-    message_word_truncated = message_word.translate(string.maketrans("",""), string.punctuation).lower().split(" ")
+    message_word_truncated = message_word.translate(string.maketrans("",""), string.punctuation).decode('utf-8').lower().split(" ")
     string_with_words = []
 
     for strings in words_file:
