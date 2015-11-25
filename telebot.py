@@ -40,7 +40,7 @@ class api_req:
 
     def post_executor(self):
 
-        log_event('Sending to %s: %s' % (self.chat_id, self.text),self.chat_name)
+        log_event('Sending to %s: %s' % (self.chat_name, self.text),self.chat_name)
         self.options={'chat_id': self.chat_id, 'text': self.text}
         self.request=requests.post(self.api_url + self.secret + '/sendMessage',self.options)
         if not self.request.status_code == 200:
@@ -50,42 +50,45 @@ class api_req:
 
 def message_extraction(message_body):
 
-    global offset
+    if type(message_body) == str or int:  #Иногда приезжает булевый тип данных, ломая итерацию. Избавляемся.
 
-    for update in message_body:
+        global offset
 
-        offset = update['update_id']
+        for update in message_body:
 
-        if not 'message' in update or not 'text' in update['message']:
-            log_event('Unknown update: %s' % (update), "error")
-            continue
+            offset = update['update_id']
 
-        from_id = update['message']['chat']['id']
-        chat_number = update['message']['from']['id']
-        chat_type = update['message']['chat']['type']
+            if not 'message' in update or not 'text' in update['message']:
+                log_event('Unknown update: %s' % (update), "error")
+                continue
 
-        if not 'first_name' in update['message']['from']:   #Проверка наличия имени и фамилии пользователя, они не всегда бывают.
-            name = update['message']['from']['last_name']
-            print name
-        if not 'last_name' in update['message']['from']:
-            name = update['message']['from']['first_name']
-        else:
-            name =  update['message']['from']['first_name'] + ' ' + update['message']['from']['last_name']
+            from_id = update['message']['chat']['id']
+            chat_number = update['message']['from']['id']
+            chat_type = update['message']['chat']['type']
+
+            if not 'first_name' in update['message']['from']:   #Проверка наличия имени и фамилии пользователя, они не всегда бывают.
+                name = update['message']['from']['last_name']
+                print name
+            if not 'last_name' in update['message']['from']:
+                name = update['message']['from']['first_name']
+            else:
+                name =  update['message']['from']['first_name'] + ' ' + update['message']['from']['last_name']
 
 
-        if chat_type == "group":    #Определяем имя чата для последующей записи в лог. 
-            chat_name = update['message']['chat']['title']
-        elif chat_type == "private":
-            chat_name = name
+            if chat_type == "group":    #Определяем имя чата для последующей записи в лог. 
+                chat_name = update['message']['chat']['title']
+            elif chat_type == "private":
+                chat_name = name
 
-        message = update['message']['text'] #Вытаскиваем текст сообщения.
-        log_event('Message from %s: %s' % (name, message),chat_name)
-        answ = messager_test(message)
+            message = update['message']['text'] #Вытаскиваем текст сообщения.
+            log_event('Message from %s: %s' % (name, message),chat_name)
+            answ = messager_test(message)
 
-        if answ: #Если получили ответ - вызываем метод post.executor из класса и постим ответ в чат. 
+            if answ: #Если получили ответ - вызываем метод post.executor из класса и постим ответ в чат. 
 
-            runn = api_req(interval,admin_id,api_url,secret,offset,answ,from_id,chat_name) 
-            data_runn = runn.post_executor()
+                runn = api_req(interval,admin_id,api_url,secret,offset,answ,from_id,chat_name) 
+                data_runn = runn.post_executor()
+
 
 config = ConfigParser.RawConfigParser()
 
