@@ -95,8 +95,7 @@ def message_extraction(message_body):
 
                 name = update['message']['from']['first_name'] + ' ' + update['message']['from']['last_name']
 
-
-            if chat_type == "group":    # Определяем имя чата для последующей записи в лог. 
+            if chat_type == "group":    # Определяем имя чата для последующей записи в лог.
 
                 chat_name = update['message']['chat']['title']
 
@@ -108,10 +107,9 @@ def message_extraction(message_body):
             log_event('Message from %s: %s' % (name, message), chat_name)
             answ = messager_test(message)
 
-            if answ:  # Если получили ответ - вызываем метод post.executor из класса и постим ответ в чат. 
+            if answ:  # Если получили ответ - вызываем метод post.executor из класса и постим ответ в чат.
 
-                runn = api_req(interval, admin_id, api_url, secret, offset, answ, from_id, chat_name) 
-#                data_runn = runn.post_executor()
+                runn = api_req(interval, admin_id, api_url, secret, offset, answ, from_id, chat_name)
                 runn.post_executor()
 
 
@@ -191,11 +189,11 @@ def messager_test(message_word):
 
         if list_diff:
 
-            string_with_words = string_with_words + list_original  # Собираем значения, совпавшие со строками списков в один список. 
+            string_with_words = string_with_words + list_original  # Собираем значения, совпавшие со строками списков в один список.
 
     if string_with_words:
 
-        rnd = random.randint(1,len(string_with_words)-1)  # Из образовавшегося набора рандомно выбираем фразу или слово, как повезет. 
+        rnd = random.randint(1, len(string_with_words)-1)  # Из образовавшегося набора рандомно выбираем фразу или слово, как повезет.
 
         return string_with_words[rnd]
 
