@@ -1,7 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import requests, ConfigParser, time, sys, os, random, string
+import requests
+import ConfigParser
+import time
+import sys
+import os
+import random
+import string
 
 reload(sys)
 
@@ -43,6 +49,7 @@ class api_req:
         log_event('Sending to %s: %s' % (self.chat_name, self.text),self.chat_name)
         self.options={'chat_id': self.chat_id, 'text': self.text}
         self.request=requests.post(self.api_url + self.secret + '/sendMessage',self.options)
+        
         if not self.request.status_code == 200:
 
             return False
@@ -179,7 +186,6 @@ def messager_test(message_word):
     if string_with_words:
 
         rnd = random.randint(1,len(string_with_words)-1) #Из образовавшегося набора рандомно выбираем фразу или слово, как повезет. 
-#        answ_word = string_with_words[rnd]
 
         return string_with_words[rnd]
 
@@ -196,7 +202,13 @@ if __name__ == "__main__":
 
     else:
 
-        open(lock_file, 'a+')
+        try:
+
+            open(lock_file, 'a+')
+
+        except:
+
+            exit(0)
 
     while True:
 
