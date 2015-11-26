@@ -68,7 +68,7 @@ def message_extraction(message_body):
 
             if not 'first_name' in update['message']['from']:   #Проверка наличия имени и фамилии пользователя, они не всегда бывают.
                 name = update['message']['from']['last_name']
-                print name
+                print(name)
             if not 'last_name' in update['message']['from']:
                 name = update['message']['from']['first_name']
             else:
@@ -101,8 +101,8 @@ try:
     api_url = config.get('SectionBot', 'api_url')
     secret = config.get('SectionBot', 'secret')
     offset = config.getint('SectionBot', 'offset')
-    text='Hello'
-    chat_id=0
+    text = 'Hello'
+    chat_id = 0
 
 except:
 
@@ -140,7 +140,7 @@ def messager_test(message_word):
 
     except:
 
-        print "Can't open words file!"
+        print("Can't open words file!")
         exit(0)
 
     message_word = message_word.encode('utf-8', 'ignore') # Извлекаем слово, убираем пунктуацию, переводим в нижний регистр и загоняем в список по пробелам
@@ -186,5 +186,5 @@ if __name__ == "__main__":
             message_extraction(data_test)
             time.sleep(interval)
         except KeyboardInterrupt:
-            print 'Прервано пользователем..'
+            print('Прервано пользователем..')
             break
