@@ -46,6 +46,7 @@ class api_req:
         if not self.request.status_code == 200:
 
             return False
+
         return self.request.json()['ok']
 
 def message_extraction(message_body):
@@ -59,6 +60,7 @@ def message_extraction(message_body):
             offset = update['update_id']
 
             if not 'message' in update or not 'text' in update['message']:
+
                 log_event('Unknown update: %s' % (update), "error")
                 continue
 
@@ -67,17 +69,25 @@ def message_extraction(message_body):
             chat_type = update['message']['chat']['type']
 
             if not 'first_name' in update['message']['from']:   #Проверка наличия имени и фамилии пользователя, они не всегда бывают.
+
                 name = update['message']['from']['last_name']
                 print(name)
+
             if not 'last_name' in update['message']['from']:
+
                 name = update['message']['from']['first_name']
+
             else:
+
                 name =  update['message']['from']['first_name'] + ' ' + update['message']['from']['last_name']
 
 
             if chat_type == "group":    #Определяем имя чата для последующей записи в лог. 
+
                 chat_name = update['message']['chat']['title']
+
             elif chat_type == "private":
+
                 chat_name = name
 
             message = update['message']['text'] #Вытаскиваем текст сообщения.
@@ -101,6 +111,7 @@ try:
     api_url = config.get('SectionBot', 'api_url')
     secret = config.get('SectionBot', 'secret')
     offset = config.getint('SectionBot', 'offset')
+    lock_file = 'tmp/lock_file'
     text = 'Hello'
     chat_id = 0
 
@@ -111,7 +122,7 @@ except:
 
 def log_event(text,logname):
 
-    filename = logname+'_log.txt'
+    filename = 'chatlogs/'+logname+'_log.txt'
 
     event = '%s >> %s' % (time.ctime(), text)
 
@@ -168,23 +179,37 @@ def messager_test(message_word):
     if string_with_words:
 
         rnd = random.randint(1,len(string_with_words)-1) #Из образовавшегося набора рандомно выбираем фразу или слово, как повезет. 
-        answ_word = string_with_words[rnd]
+#        answ_word = string_with_words[rnd]
 
-        return answ_word
+        return string_with_words[rnd]
 
     else:
 
         return False
 
 if __name__ == "__main__":
+
+    if os.path.exists(lock_file):
+
+        print('Lock file exists!')
+        exit(0)
+
+    else:
+
+        open(lock_file, 'a+')
+
     while True:
 
         try:
+
             chat_name = 0
             test = api_req(interval,admin_id,api_url,secret,offset,text,chat_id,chat_name)
             data_test = test.request_executor()
             message_extraction(data_test)
             time.sleep(interval)
+
         except KeyboardInterrupt:
+
             print('Прервано пользователем..')
+            os.remove('lock_file')
             break
