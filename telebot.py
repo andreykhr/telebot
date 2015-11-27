@@ -146,6 +146,15 @@ def log_event(text, logname):
     filework.close()
 
 
+def learner(message_text):
+
+    message_text = message_text.replace('/learn','').strip()
+    filework = open('words.dat', 'a')
+    filework.write(message_text)
+    filework.write("\n")
+    filework.close()
+
+
 def messager_test(message_word):
 
     message_word_command = message_word.split(" ")
@@ -161,6 +170,10 @@ def messager_test(message_word):
     elif message_word_command[0] == '/start':
 
         return "OK"
+
+    elif message_word_command[0] == '/learn':
+
+        learner(message_word)
 
     try:
 
@@ -197,6 +210,8 @@ def messager_test(message_word):
 
         rnd = random.randint(1, len(string_with_words)-1)  # Из образовавшегося набора рандомно выбираем фразу или слово, как повезет.
 
+        words_file.close()
+
         return string_with_words[rnd]
 
     else:
@@ -208,13 +223,14 @@ if __name__ == "__main__":
     if os.path.exists(lock_file):
 
         print('Lock file exists!')
-        exit(0)
+        #exit(0)
 
     else:
 
         try:
 
             open(lock_file, 'a+')
+            lock_file.close()
 
         except:
 
