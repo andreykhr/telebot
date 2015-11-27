@@ -111,6 +111,8 @@ def message_extraction(message_body):  # Выковыриваем из отве�
 
             message = update['message']['text']  # Вытаскиваем текст сообщения.
 
+            log_event('Message from %s: %s' % (name, message), chat_name)
+
             return (message, from_id, chat_name, chat_number)  # Возвращаем сообщение и идентификаторы чата
 
 
