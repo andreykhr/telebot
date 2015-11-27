@@ -174,6 +174,7 @@ def messager_test(message_word):
     elif message_word_command[0] == '/learn':
 
         learner(message_word)
+        return "Зопейсал"
 
     try:
 
