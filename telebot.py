@@ -148,15 +148,17 @@ def log_event(text, logname):
 
 def messager_test(message_word):
 
-    if message_word == '/help':
+    message_word_command = message_word.split(" ")
+
+    if message_word_command[0] == '/help':
 
         return "Telebot - Simple Telegram bot"
 
-    elif message_word == '/stop':
+    elif message_word_command[0] == '/stop':
 
         return "Hui tebe!"
 
-    elif message_word == '/start':
+    elif message_word_command[0] == '/start':
 
         return "OK"
 
