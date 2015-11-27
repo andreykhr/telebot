@@ -14,7 +14,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 
-class api_req:
+class api_req:  # Класс для get/post из telegram api
 
     def __init__(self,interval,admin_id,api_url,secret,offset,text,chat_id,chat_name):
 
@@ -48,7 +48,13 @@ class api_req:
 
             return False
 
-        return self.request.json()['result']
+        if self.request.json()['result']:
+
+            return self.request.json()['result']
+
+        else:
+
+            return False
 
     def post_executor(self):
 
@@ -63,7 +69,7 @@ class api_req:
         return self.request.json()['ok']
 
 
-def message_extraction(message_body):
+def message_extraction(message_body):  # Выковыриваем из ответа сообщение
 
     if type(message_body) == str or int:  # Иногда приезжает булевый тип данных, ломая итерацию. Избавляемся.
 
@@ -79,7 +85,7 @@ def message_extraction(message_body):
                 continue
 
             from_id = update['message']['chat']['id']
-#            chat_number = update['message']['from']['id']
+            chat_number = update['message']['chat']['id']
             chat_type = update['message']['chat']['type']
 
             if not 'first_name' in update['message']['from']:   # Проверка наличия имени и фамилии пользователя, они не всегда бывают.
@@ -104,13 +110,8 @@ def message_extraction(message_body):
                 chat_name = name
 
             message = update['message']['text']  # Вытаскиваем текст сообщения.
-            log_event('Message from %s: %s' % (name, message), chat_name)
-            answ = messager_test(message)
 
-            if answ:  # Если получили ответ - вызываем метод post.executor из класса и постим ответ в чат.
-
-                runn = api_req(interval, admin_id, api_url, secret, offset, answ, from_id, chat_name)
-                runn.post_executor()
+            return (message, from_id, chat_name, chat_number)  # Возвращаем сообщение и идентификаторы чата
 
 
 config = ConfigParser.RawConfigParser()
@@ -124,7 +125,7 @@ try:
     api_url = config.get('SectionBot', 'api_url')
     secret = config.get('SectionBot', 'secret')
     offset = config.getint('SectionBot', 'offset')
-    lock_file = 'tmp/lock_file'
+    lock_file = 'tmp/telebot.lock'
     text = 'Hello'
     chat_id = 0
 
@@ -146,16 +147,18 @@ def log_event(text, logname):
     filework.close()
 
 
-def learner(message_text):
+def learner(message_text, chat_number):
 
+    chat_number = str(chat_number)
+    chat_number = chat_number.replace('+', '').replace('-','')
     message_text = message_text.replace('/learn','').strip()
-    filework = open('words.dat', 'a')
+    filework = open('dict/' + chat_number + '_words.dat', 'a')
     filework.write(message_text)
     filework.write("\n")
     filework.close()
 
 
-def messager_test(message_word):
+def messager_test(message_word,chat_name,chat_number):
 
     message_word_command = message_word.split(" ")
 
@@ -173,17 +176,17 @@ def messager_test(message_word):
 
     elif message_word_command[0] == '/learn':
 
-        learner(message_word)
+        learner(message_word, chat_number)
         return "Зопейсал"
 
     try:
-
-        words_file = open('words.dat', 'r')
+        chat_number = str(chat_number)
+        chat_number = chat_number.replace('+', '').replace('-', '')
+        words_file = open('dict/' + chat_number + '_words.dat', 'r')
 
     except:
 
-        print("Can't open words file!")
-        exit(0)
+        return False
 
     message_word = message_word.encode('utf-8', 'ignore')  # Извлекаем слово, убираем пунктуацию, переводим в нижний регистр и загоняем в список по пробелам
     message_word_truncated = message_word.translate(string.maketrans("",""), string.punctuation).decode('utf-8').lower().split(" ")
@@ -242,9 +245,26 @@ if __name__ == "__main__":
         try:
 
             chat_name = 0
+            answ_data = False
+            message_data = False
             test = api_req(interval, admin_id, api_url, secret, offset, text, chat_id, chat_name)
+
             data_test = test.request_executor()
-            message_extraction(data_test)
+
+            if data_test:
+
+                message_data = message_extraction(data_test)
+
+            if message_data:
+
+                message, from_id, chat_name, chat_number = message_data
+                answ = messager_test(message, chat_name, chat_number)
+
+                if answ:
+
+                    runn = api_req(interval, admin_id, api_url, secret, offset, answ, from_id, chat_name)
+                    runn.post_executor()
+
             time.sleep(interval)
 
         except KeyboardInterrupt:
