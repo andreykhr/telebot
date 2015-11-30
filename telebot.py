@@ -192,6 +192,10 @@ def messager_test(message_word,chat_name,chat_number):
 
     message_word = message_word.encode('utf-8', 'ignore')  # Извлекаем слово, убираем пунктуацию, переводим в нижний регистр и загоняем в список по пробелам
     message_word_truncated = message_word.translate(string.maketrans("",""), string.punctuation).decode('utf-8').lower().split(" ")
+#    print("Сообщение" + message_word_truncated[0] + '!')
+    if message_word_truncated[0] == '':
+        return False
+#        print("Хуита")
     string_with_words = []
 
     for strings in words_file:
