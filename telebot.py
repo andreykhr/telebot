@@ -16,7 +16,7 @@ sys.setdefaultencoding('utf-8')
 
 class api_req:  # Класс для get/post из telegram api
 
-    def __init__(self,interval,admin_id,api_url,secret,offset,text,chat_id,chat_name):
+    def __init__(self, interval, admin_id, api_url, secret, offset, text, chat_id, chat_name):
 
         self.interval = interval
         self.admin_id = admin_id
@@ -110,14 +110,10 @@ def message_extraction(message_body):  # Выковыриваем из отве�
                 chat_name = name
 
             message = update['message']['text']  # Вытаскиваем текст сообщения.
-
             log_event('Message from %s: %s' % (name, message), chat_name)
-
             return (message, from_id, chat_name, chat_number)  # Возвращаем сообщение и идентификаторы чата
 
-
 config = ConfigParser.RawConfigParser()
-
 config.read('telebot.cfg')
 
 try:
@@ -140,9 +136,7 @@ except:
 def log_event(text, logname):
 
     filename = 'chatlogs/'+logname+'_log.txt'
-
     event = '%s >> %s' % (time.ctime(), text)
-
     filework = open(filename, 'a+')
     filework.write(event)
     filework.write("\n")
@@ -152,8 +146,8 @@ def log_event(text, logname):
 def learner(message_text, chat_number):
 
     chat_number = str(chat_number)
-    chat_number = chat_number.replace('+', '').replace('-','')
-    message_text = message_text.replace('/learn','').strip()
+    chat_number = chat_number.replace('+', '').replace('-', '')
+    message_text = message_text.replace('/learn', '').strip()
     filework = open('dict/' + chat_number + '_words.dat', 'a')
     filework.write(message_text)
     filework.write("\n")
@@ -179,7 +173,7 @@ def messager_test(message_word,chat_name,chat_number):
     elif message_word_command[0] == '/learn':
 
         learner(message_word, chat_number)
-        return "Зопейсал"
+        return "Записал!"
 
     try:
         chat_number = str(chat_number)
@@ -191,12 +185,11 @@ def messager_test(message_word,chat_name,chat_number):
         return False
 
     message_word = message_word.encode('utf-8', 'ignore')  # Извлекаем слово, убираем пунктуацию, переводим в нижний регистр и загоняем в список по пробелам
-    message_word_truncated = message_word.translate(string.maketrans("",""), string.punctuation).decode('utf-8').lower().split(" ")
-#    print("Сообщение" + message_word_truncated[0] + '!')
+    message_word_truncated = message_word.translate(string.maketrans("", ""), string.punctuation).decode('utf-8').lower().split(" ")
+    string_with_words = []
+
     if message_word_truncated[0] == '':
         return False
-#        print("Хуита")
-    string_with_words = []
 
     for strings in words_file:
 
@@ -207,7 +200,7 @@ def messager_test(message_word,chat_name,chat_number):
 
         for elements in list_spl:
 
-            list_spl_truncated[counter] = list_spl[counter].encode('utf-8', 'ignore').translate(string.maketrans("",""), string.punctuation).decode('utf-8')  # Удаляем пунктуацию, получаем чистый список
+            list_spl_truncated[counter] = list_spl[counter].encode('utf-8', 'ignore').translate(string.maketrans("", ""), string.punctuation).decode('utf-8')  # Удаляем пунктуацию, получаем чистый список
             counter += 1
 
         list_diff = list(set(list_spl_truncated) & set(message_word_truncated))  # получаем точки пресечения списков
