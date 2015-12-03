@@ -113,25 +113,6 @@ def message_extraction(message_body):  # Выковыриваем из отве�
             log_event('Message from %s: %s' % (name, message), chat_name)
             return (message, from_id, chat_name, chat_number)  # Возвращаем сообщение и идентификаторы чата
 
-config = ConfigParser.RawConfigParser()
-config.read('telebot.cfg')
-
-try:
-
-    interval = config.getfloat('SectionBot', 'interval')
-    admin_id = config.getint('SectionBot', 'admin_id')
-    api_url = config.get('SectionBot', 'api_url')
-    secret = config.get('SectionBot', 'secret')
-    offset = config.getint('SectionBot', 'offset')
-    lock_file = 'tmp/telebot.lock'
-    text = 'Hello'
-    chat_id = 0
-
-except:
-
-    print("Can't parse config file!")
-    exit(0)
-
 
 def log_event(text, logname):
 
@@ -185,7 +166,7 @@ def messager_test(message_word,chat_name,chat_number):
         return False
 
     message_word = message_word.encode('utf-8', 'ignore')  # Извлекаем слово, убираем пунктуацию, переводим в нижний регистр и загоняем в список по пробелам
-    message_word_truncated = message_word.translate(string.maketrans("", ""), string.punctuation).decode('utf-8').lower().split(" ")
+    message_word_truncated = message_word.translate(string.maketrans("",""), string.punctuation).decode('utf-8').lower().split(" ")
     string_with_words = []
 
     if message_word_truncated[0] == '':
@@ -220,6 +201,27 @@ def messager_test(message_word,chat_name,chat_number):
     else:
 
         return False
+
+#  Парсим конфигурацию
+
+config = ConfigParser.RawConfigParser()
+config.read('telebot.cfg')
+
+try:
+
+    interval = config.getfloat('SectionBot', 'interval')
+    admin_id = config.getint('SectionBot', 'admin_id')
+    api_url = config.get('SectionBot', 'api_url')
+    secret = config.get('SectionBot', 'secret')
+    offset = config.getint('SectionBot', 'offset')
+    lock_file = 'tmp/telebot.lock'
+    text = 'Hello'
+    chat_id = 0
+
+except:
+
+    print("Can't parse config file!")
+    exit(0)
 
 if __name__ == "__main__":
 
