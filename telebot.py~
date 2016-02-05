@@ -13,7 +13,18 @@ reload(sys)
 
 sys.setdefaultencoding('utf-8')
 
-
+def longestSubstringFinder(string1, string2):
+    answer = ""
+    len1, len2 = len(string1), len(string2)
+    for i in range(len1):
+        match = ""
+        for j in range(len2):
+            if (i + j < len1 and string1[i + j] == string2[j]):
+                match += string2[j]
+            else:
+                if (len(match) > len(answer)): answer = match
+                match = ""
+    return answer
 
 
 class api_req:  # Класс для get/post из telegram api
@@ -137,38 +148,6 @@ def learner(message_text, chat_number):
     filework.close()
 
 
-def longestSubstringFinder(string1, string2):
-    """
-    string1 is for word in dictionary
-    string2 is for word in message
-    """
-    answer = ""
-    len1, len2 = len(string1), len(string2)
-    for i in range(len1):
-        match = ""
-        for j in range(len2):
-            if (i + j < len1 and string1[i + j] == string2[j]):
-                match += string2[j]
-            else:
-                if (len(match) > len(answer)): answer = match
-                match = ""
-
-    return len(answer) >= 0.8 * len(string1)
-
-
-def compare_words_lists(filelist, message):
-    """
-	filelist is for words in file
-	message list is for message words
-    """
-    matched = []
-    for f in filelist:
-	   for w in message:
-	       if longestSubstringFinder(f, w):
-                matched.append(f)
-    return matched
-	
-
 def messager_test(message_word,chat_name,chat_number):
 
     message_word_command = message_word.split(" ")
@@ -207,6 +186,7 @@ def messager_test(message_word,chat_name,chat_number):
         return False
 
     for strings in words_file:
+
         counter = 0
         list_original = strings.split(" || ")
         list_spl = strings.decode('utf-8').lower().split(" || ")  # Получаем строку из файла, делим ее по разделителю и переводим в нижний регистр
@@ -217,9 +197,10 @@ def messager_test(message_word,chat_name,chat_number):
             list_spl_truncated[counter] = list_spl[counter].encode('utf-8', 'ignore').translate(string.maketrans("", ""), string.punctuation).decode('utf-8')  # Удаляем пунктуацию, получаем чистый список
             counter += 1
 
-        list_diff = compare_words_lists(list_spl_truncated, message_word_truncated)  # получаем точки пресечения списков
+        list_diff = list(set(list_spl_truncated) & set(message_word_truncated))  # получаем точки пресечения списков
 
         if list_diff:
+
             string_with_words = string_with_words + list_original  # Собираем значения, совпавшие со строками списков в один список.
 
     if string_with_words:
