@@ -303,5 +303,5 @@ if __name__ == "__main__":
         except KeyboardInterrupt:
 
             print('Прервано пользователем..')
-            os.remove('lock_file')
+            os.remove(lock_file)
             break
